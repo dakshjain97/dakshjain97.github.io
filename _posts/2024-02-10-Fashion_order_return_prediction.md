@@ -5,7 +5,7 @@ subtitle:
 cover-img: 
 thumbnail-img: 
 share-img: 
-tags: [classification, supervised learning]
+tags: [classification, supervised learning, ecommerce]
 author: Daksh Jain
 ---
 
@@ -2455,25 +2455,25 @@ for col in ['item_price','Days_For_Delivery','Age_Customer','Month_Delivery']:
 
 
     
-![png](https://drive.google.com/file/d/1CFmoMaUrcmxB_UaM2k4olrzTge2BByOO/view?usp=sharing)
+![png](https://ibb.co/VLNkJRc)
     
 
 
 
     
-![png](Training_Code_files/Training_Code_39_1.png)
+![png](https://ibb.co/KGZhxSY)
     
 
 
 
     
-![png](Training_Code_files/Training_Code_39_2.png)
+![png](https://ibb.co/CMVpwVX)
     
 
 
 
     
-![png](Training_Code_files/Training_Code_39_3.png)
+![png](https://ibb.co/JQSCfr4)
     
 
 
@@ -2507,7 +2507,7 @@ sns.heatmap(data_features[['return','item_price','Days_For_Delivery','Age_Custom
 
 
     
-![png](Training_Code_files/Training_Code_42_1.png)
+![png](https://ibb.co/5GcdxT4)
     
 
 
@@ -2583,7 +2583,7 @@ plt.show()
 
 
     
-![png](Training_Code_files/Training_Code_48_0.png)
+![png](https://ibb.co/1stNkHK)
     
 
 
@@ -2734,7 +2734,7 @@ plt.show()
 
 
     
-![png](Training_Code_files/Training_Code_58_0.png)
+![png](https://ibb.co/pPpYXGn)
     
 
 
