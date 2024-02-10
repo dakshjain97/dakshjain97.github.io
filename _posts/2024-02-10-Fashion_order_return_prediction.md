@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Prediction of order returns for fashion category
+title: Prediction of returns for fashion orders in ecommerce
 subtitle: 
 cover-img: 
 thumbnail-img: 
@@ -2455,7 +2455,7 @@ for col in ['item_price','Days_For_Delivery','Age_Customer','Month_Delivery']:
 
 
     
-![png](Training_Code_files/Training_Code_39_0.png)
+![png](https://drive.google.com/file/d/1CFmoMaUrcmxB_UaM2k4olrzTge2BByOO/view?usp=sharing)
     
 
 
