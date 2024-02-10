@@ -8,6 +8,7 @@ share-img:
 tags: [classification, supervised learning, ecommerce]
 author: Daksh Jain
 ---
+Training notebook with explainaiton to predict return of orders for fashion category products in ecommerce. This problem is framed as binary classfication problem as solved using random forest algorithm showcasing all steps in details i.e Data Cleaning , Data Exploration , Feature Engineering, Feature Selection, Model Building, Model Evaluation.
 
 ```python
 #Importing Libraries
@@ -2594,7 +2595,7 @@ x_train_selected=X_train[rfecv_features]
 x_test_selected=X_test[rfecv_features]
 ```
 
-# Model Building with Hyperparameter Tunning - Using Random Forest due to time constraints , since random forest isn't sensitive to outliers and missing values . Also it doesn't require feature scaling.
+# Model Building with Hyperparameter Tunning - Using Random Forest
 
 
 ```python
