@@ -2456,25 +2456,25 @@ for col in ['item_price','Days_For_Delivery','Age_Customer','Month_Delivery']:
 
 
     
-![png](https://ibb.co/VLNkJRc)
+![png](https://i.ibb.co/x2srXWt/Training-Code-39-0.png)
     
 
 
 
     
-![png](https://ibb.co/KGZhxSY)
+![png](https://i.ibb.co/JdLtjgN/Training-Code-39-1.png)
     
 
 
 
     
-![png](https://ibb.co/CMVpwVX)
+![png](https://i.ibb.co/nnQqwQV/Training-Code-39-2.png)
     
 
 
 
     
-![png](https://ibb.co/JQSCfr4)
+![png](https://i.ibb.co/164bDR5/Training-Code-39-3.png)
     
 
 
@@ -2508,7 +2508,7 @@ sns.heatmap(data_features[['return','item_price','Days_For_Delivery','Age_Custom
 
 
     
-![png](https://ibb.co/5GcdxT4)
+![png](https://i.ibb.co/XjJ9kXL/Training-Code-42-1.png)
     
 
 
@@ -2584,7 +2584,7 @@ plt.show()
 
 
     
-![png](https://ibb.co/1stNkHK)
+![png](https://i.ibb.co/4snLHBM/Training-Code-48-0.png)
     
 
 
@@ -2735,7 +2735,7 @@ plt.show()
 
 
     
-![png](https://ibb.co/pPpYXGn)
+![png](https://i.ibb.co/QcGymzX/Training-Code-58-0.png)
     
 
 
