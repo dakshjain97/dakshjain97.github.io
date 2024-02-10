@@ -8,7 +8,7 @@ share-img:
 tags: [classification, supervised learning, ecommerce]
 author: Daksh Jain
 ---
-Training notebook with explainaiton to predict return of orders for fashion category products in ecommerce. This problem is framed as binary classfication problem as solved using random forest algorithm showcasing all steps in details i.e Data Cleaning , Data Exploration , Feature Engineering, Feature Selection, Model Building, Model Evaluation.
+To predict return of orders for fashion category products in ecommerce. This problem is framed as binary classfication problem as solved using random forest algorithm showcasing all steps in details i.e Data Cleaning , Data Exploration , Feature Engineering, Feature Selection, Model Building, Model Evaluation. This notebook explains in detail each step with comments 
 
 ```python
 #Importing Libraries
