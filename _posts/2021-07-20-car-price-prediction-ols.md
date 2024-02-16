@@ -1,3 +1,15 @@
+---
+layout: post
+title: Car Price prediction using ordinary least squares
+subtitle: 
+cover-img: 
+thumbnail-img: 
+share-img: 
+tags: [regression, supervised learning, OLS, linear regression assumptions]
+author: Daksh Jain
+---
+Predict car prices of various companies (using open source kaggle dataset) by using OLS method . All steps are followed in this notebook Data collection , exploratory data analysis, feature engineering , feature selection , model building & model evaluaion . In addition to this majority of assumptions of linear regression are tested and corrected with detailed comments.
+
 ```python
 import numpy as np 
 import pandas as pd 
