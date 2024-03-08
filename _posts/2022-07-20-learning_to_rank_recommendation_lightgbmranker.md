@@ -2139,6 +2139,9 @@ study = optuna.create_study(direction='maximize',
                             sampler=optuna.samplers.TPESampler(seed=100) #fix random seed
                            )
 study.optimize(objective, n_trials=10)
+
+Interupting training for demo purpose ( to limit notebook run time)
+
 ```
 
     [I 2024-03-08 10:23:17,710] A new study created in memory with name: no-name-0c1504ee-8b47-44ef-8d2f-61e141a46cb8
