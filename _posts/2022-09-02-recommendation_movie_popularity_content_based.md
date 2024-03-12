@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Movie Recommendation using popularity & content based recommendations
+title: Movie Recommendation using popularity & content based techniques
 subtitle: 
 cover-img: 
 thumbnail-img: 
