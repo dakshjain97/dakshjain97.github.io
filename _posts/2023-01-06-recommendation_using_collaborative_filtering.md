@@ -8,7 +8,7 @@ share-img:
 tags: [recommendation, collaborative filtering, user & item similarities, embedding, deep learning, dot product]
 author: Daksh Jain
 ---
-In this notebook objective is to demonstrate collaborative filtering based recommendation techniques to recommend anime bu utilizing user & item based similarities . To achieve this a Neural network model is created with two embedding layers (each for user & item) , for POC purose model is only trained on small epoc. To calculate similarities dot product (cosine similarity) is used among user & item embedding vectors
+In this notebook objective is to demonstrate collaborative filtering based recommendation techniques to recommend anime by utilizing user & item based similarities . To achieve this a Neural network model is created with two embedding layers (each for user & item) , for POC purose model is only trained on small epoch. To calculate similarities dot product (cosine similarity) is used among user & item embedding vectors
 
 
 ```python
