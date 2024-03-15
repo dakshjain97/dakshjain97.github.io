@@ -1,14 +1,14 @@
 ---
 layout: post
-title: NLP Text Classification using Glove, Tf-IDF & LSTM
+title: NLP Text Classification using Glove, Tf-IDF , LSTM & BERT
 subtitle: 
 cover-img: 
 thumbnail-img: 
 share-img: 
-tags: [NLP, text classification, word embeddings, tf-idf, deep learning, LSTM]
+tags: [NLP, text classification, word embeddings, tf-idf, deep learning, LSTM, BERT]
 author: Daksh Jain
 ---
-This notebooks objective is to showcase & compare text classification results using pre-trained word embedings, TF-IDF & deep learning model like LSTM . Here objective is to classify text into 3 categories (authors). Using TF-IDF gave highest f1-score , but LSTM also was close that too without using pre-trained word embeddings.
+This notebooks objective is to showcase & compare text classification results using pre-trained word embedings, TF-IDF & deep learning model like LSTM & BERT . Here objective is to classify text into 3 categories (authors). Using BERT gave highest f1-score , but TF-IDF + logistic regression also was close that too without using pre-trained word embeddings.
 
 ```python
 # This Python 3 environment comes with many helpful analytics libraries installed
@@ -2673,6 +2673,317 @@ f1_score(yvalid_encoded, np.argmax(probas,axis = 1), average='weighted')
     0.7809269071669251
 
 
+# Using BERT
+
+
+```python
+!pip install pytorch-pretrained-bert pytorch-nlp
+```
+
+    Collecting pytorch-pretrained-bert
+      Downloading pytorch_pretrained_bert-0.6.2-py3-none-any.whl.metadata (86 kB)
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m86.7/86.7 kB[0m [31m2.1 MB/s[0m eta [36m0:00:00[0ma [36m0:00:01[0m
+    [?25hCollecting pytorch-nlp
+      Downloading pytorch_nlp-0.5.0-py3-none-any.whl.metadata (9.0 kB)
+    Requirement already satisfied: torch>=0.4.1 in /opt/conda/lib/python3.10/site-packages (from pytorch-pretrained-bert) (2.1.2+cpu)
+    Requirement already satisfied: numpy in /opt/conda/lib/python3.10/site-packages (from pytorch-pretrained-bert) (1.24.4)
+    Requirement already satisfied: boto3 in /opt/conda/lib/python3.10/site-packages (from pytorch-pretrained-bert) (1.26.100)
+    Requirement already satisfied: requests in /opt/conda/lib/python3.10/site-packages (from pytorch-pretrained-bert) (2.31.0)
+    Requirement already satisfied: tqdm in /opt/conda/lib/python3.10/site-packages (from pytorch-pretrained-bert) (4.66.1)
+    Requirement already satisfied: regex in /opt/conda/lib/python3.10/site-packages (from pytorch-pretrained-bert) (2023.12.25)
+    Requirement already satisfied: filelock in /opt/conda/lib/python3.10/site-packages (from torch>=0.4.1->pytorch-pretrained-bert) (3.13.1)
+    Requirement already satisfied: typing-extensions in /opt/conda/lib/python3.10/site-packages (from torch>=0.4.1->pytorch-pretrained-bert) (4.9.0)
+    Requirement already satisfied: sympy in /opt/conda/lib/python3.10/site-packages (from torch>=0.4.1->pytorch-pretrained-bert) (1.12)
+    Requirement already satisfied: networkx in /opt/conda/lib/python3.10/site-packages (from torch>=0.4.1->pytorch-pretrained-bert) (3.2.1)
+    Requirement already satisfied: jinja2 in /opt/conda/lib/python3.10/site-packages (from torch>=0.4.1->pytorch-pretrained-bert) (3.1.2)
+    Requirement already satisfied: fsspec in /opt/conda/lib/python3.10/site-packages (from torch>=0.4.1->pytorch-pretrained-bert) (2023.12.2)
+    Collecting botocore<1.30.0,>=1.29.100 (from boto3->pytorch-pretrained-bert)
+      Downloading botocore-1.29.165-py3-none-any.whl.metadata (5.9 kB)
+    Requirement already satisfied: jmespath<2.0.0,>=0.7.1 in /opt/conda/lib/python3.10/site-packages (from boto3->pytorch-pretrained-bert) (1.0.1)
+    Requirement already satisfied: s3transfer<0.7.0,>=0.6.0 in /opt/conda/lib/python3.10/site-packages (from boto3->pytorch-pretrained-bert) (0.6.2)
+    Requirement already satisfied: charset-normalizer<4,>=2 in /opt/conda/lib/python3.10/site-packages (from requests->pytorch-pretrained-bert) (3.3.2)
+    Requirement already satisfied: idna<4,>=2.5 in /opt/conda/lib/python3.10/site-packages (from requests->pytorch-pretrained-bert) (3.6)
+    Requirement already satisfied: urllib3<3,>=1.21.1 in /opt/conda/lib/python3.10/site-packages (from requests->pytorch-pretrained-bert) (1.26.18)
+    Requirement already satisfied: certifi>=2017.4.17 in /opt/conda/lib/python3.10/site-packages (from requests->pytorch-pretrained-bert) (2023.11.17)
+    Requirement already satisfied: python-dateutil<3.0.0,>=2.1 in /opt/conda/lib/python3.10/site-packages (from botocore<1.30.0,>=1.29.100->boto3->pytorch-pretrained-bert) (2.8.2)
+    Requirement already satisfied: MarkupSafe>=2.0 in /opt/conda/lib/python3.10/site-packages (from jinja2->torch>=0.4.1->pytorch-pretrained-bert) (2.1.3)
+    Requirement already satisfied: mpmath>=0.19 in /opt/conda/lib/python3.10/site-packages (from sympy->torch>=0.4.1->pytorch-pretrained-bert) (1.3.0)
+    Requirement already satisfied: six>=1.5 in /opt/conda/lib/python3.10/site-packages (from python-dateutil<3.0.0,>=2.1->botocore<1.30.0,>=1.29.100->boto3->pytorch-pretrained-bert) (1.16.0)
+    Downloading pytorch_pretrained_bert-0.6.2-py3-none-any.whl (123 kB)
+    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m123.8/123.8 kB[0m [31m5.2 MB/s[0m eta [36m0:00:00[0m
+    [?25hDownloading pytorch_nlp-0.5.0-py3-none-any.whl (90 kB)
+    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m90.1/90.1 kB[0m [31m5.3 MB/s[0m eta [36m0:00:00[0m
+    [?25hDownloading botocore-1.29.165-py3-none-any.whl (11.0 MB)
+    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m11.0/11.0 MB[0m [31m83.8 MB/s[0m eta [36m0:00:00[0m:00:01[0m0:01[0m
+    [?25hInstalling collected packages: pytorch-nlp, botocore, pytorch-pretrained-bert
+      Attempting uninstall: botocore
+        Found existing installation: botocore 1.34.22
+        Uninstalling botocore-1.34.22:
+          Successfully uninstalled botocore-1.34.22
+    [31mERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+    aiobotocore 2.11.0 requires botocore<1.34.23,>=1.33.2, but you have botocore 1.29.165 which is incompatible.[0m[31m
+    [0mSuccessfully installed botocore-1.29.165 pytorch-nlp-0.5.0 pytorch-pretrained-bert-0.6.2
+
+
+
+```python
+# Import Libraries
+
+import tensorflow as tf
+import torch
+from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
+from keras.preprocessing.sequence import pad_sequences
+from sklearn.model_selection import train_test_split
+from pytorch_pretrained_bert import BertTokenizer, BertConfig
+from pytorch_pretrained_bert import BertAdam, BertForSequenceClassification
+from tqdm import tqdm, trange
+import pandas as pd
+import io
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+
+```python
+# Create sentence and label lists
+sentences_train = xtrain['clean_text'].values
+sentences_test = xvalid['clean_text'].values
+
+# We need to add special tokens at the beginning and end of each sentence for BERT to work properly
+sentences_train = ["[CLS] " + sentence + " [SEP]" for sentence in sentences_train]
+sentences_test = ["[CLS] " + sentence + " [SEP]" for sentence in sentences_test]
+```
+
+Next, import the BERT tokenizer, used to convert our text into tokens that correspond to BERT's vocabulary.
+
+
+```python
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True) #bert-base-uncased
+
+
+tokenized_texts_train = [tokenizer.tokenize(sent) for sent in sentences_train]
+tokenized_texts_test = [tokenizer.tokenize(sent) for sent in sentences_test]
+print ("Tokenize the first sentence:")
+print (tokenized_texts_train[0])
+```
+
+    Tokenize the first sentence:
+    ['[CLS]', 'i', 'never', 'sought', 'to', 'return', 'to', 'those', 'ten', '##eb', '##rous', 'labyrinth', 'nor', 'would', 'i', 'direct', 'any', 'sane', 'man', 'th', '##ith', '##er', 'if', 'i', 'could', '[SEP]']
+
+
+
+```python
+sentences_train[0]
+```
+
+
+
+
+    '[CLS] i never sought to return to those tenebrous labyrinth nor would i direct any sane man thither if i could [SEP]'
+
+
+
+
+```python
+# Set the maximum sequence length.clear The longest sequence in our training set is 4593, but we'll leave room on the end anyway. 
+MAX_LEN = 64
+
+# Use the BERT tokenizer to convert the tokens to their index numbers in the BERT vocabulary
+input_ids_train = [tokenizer.convert_tokens_to_ids(x) for x in tokenized_texts_train]
+input_ids_test = [tokenizer.convert_tokens_to_ids(x) for x in tokenized_texts_test]
+```
+
+
+```python
+# Pad our input tokens
+input_ids_train = pad_sequences(input_ids_train, maxlen=MAX_LEN, dtype="long", truncating="post", padding="post")
+input_ids_test = pad_sequences(input_ids_test, maxlen=MAX_LEN, dtype="long", truncating="post", padding="post")
+
+```
+
+
+```python
+# Create attention masks (this is to identify which token is for padding ans which is actual text token)
+# Create a mask of 1s for each token followed by 0s for padding
+def to_attention(input_ids):
+    attention_masks = []
+    for seq in input_ids:
+        seq_mask = [float(i>0) for i in seq]
+        attention_masks.append(seq_mask)
+    return attention_masks
+```
+
+
+```python
+attention_masks_train = to_attention(input_ids_train)
+attention_masks_test = to_attention(input_ids_test)
+```
+
+
+```python
+# Convert all of our data into torch tensors, the required datatype for our model
+
+train_inputs = torch.tensor(input_ids_train)
+validation_inputs = torch.tensor(input_ids_test)
+train_labels = torch.tensor(ytrain_encoded)
+validation_labels = torch.tensor(yvalid_encoded)
+train_masks = torch.tensor(attention_masks_train)
+validation_masks = torch.tensor(attention_masks_test)
+```
+
+
+```python
+# Select a batch size for training. For fine-tuning BERT on a specific task, the authors recommend a batch size of 16 or 32
+batch_size = 32
+
+# Create an iterator of our data with torch DataLoader. This helps save on memory during training because, unlike a for loop, 
+# with an iterator the entire dataset does not need to be loaded into memory
+
+train_data = TensorDataset(train_inputs, train_masks, train_labels)
+train_sampler = RandomSampler(train_data)
+train_dataloader = DataLoader(train_data, sampler=train_sampler, batch_size=batch_size)
+
+validation_data = TensorDataset(validation_inputs, validation_masks, validation_labels)
+validation_sampler = SequentialSampler(validation_data)
+validation_dataloader = DataLoader(validation_data, sampler=validation_sampler, batch_size=batch_size)
+```
+
+
+```python
+# Load BertForSequenceClassification, the pretrained BERT model with a single linear classification layer on top. 
+
+model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=3)
+```
+
+    100%|██████████| 407873900/407873900 [00:09<00:00, 45197880.13B/s]
+
+
+Now that we have our model loaded we need to grab the training hyperparameters from within the stored model.
+
+For the purposes of fine-tuning, the authors recommend the following hyperparameter ranges:
+
+Batch size: 16, 32 Learning rate (Adam): 5e-5, 3e-5, 2e-5 Number of epochs: 2, 3, 4
+
+
+```python
+param_optimizer = list(model.named_parameters())
+no_decay = ['bias', 'gamma', 'beta']
+optimizer_grouped_parameters = [{'params': [p for n, p in param_optimizer if not any(nd in n for nd in no_decay)],'weight_decay_rate': 0.01},
+                                {'params': [p for n, p in param_optimizer if any(nd in n for nd in no_decay)],'weight_decay_rate': 0.0}]
+```
+
+
+```python
+# This variable contains all of the hyperparemeter information our training loop needs
+optimizer = BertAdam(optimizer_grouped_parameters,lr=2e-5,warmup=.1)
+```
+
+
+```python
+# Function to calculate f1 score of our predictions vs labels
+def flat_accuracy(preds, labels):
+#     pred_flat = np.argmax(preds, axis=1).flatten()
+#     labels_flat = labels.flatten()
+    return f1_score(labels.flatten(), np.argmax(preds, axis=1).flatten(), average='weighted')
+    #return np.sum(pred_flat == labels_flat) / len(labels_flat)
+```
+
+
+```python
+del sentences_train,sentences_test,tokenizer,tokenized_texts_train,tokenized_texts_test,input_ids_train,input_ids_test,attention_masks_train,attention_masks_test
+```
+
+
+```python
+t = [] 
+
+# Store our loss and accuracy for plotting
+train_loss_set = []
+
+# Number of training epochs 
+epochs = 2
+
+# trange is a tqdm wrapper around the normal python range
+for _ in trange(epochs, desc="Epoch"):
+    # Training
+  
+    # Set our model to training mode (as opposed to evaluation mode)
+    model.train()
+    # Tracking variables
+    tr_loss = 0
+    nb_tr_examples, nb_tr_steps = 0, 0
+    # Train the data for one epoch
+    for step, batch in enumerate(train_dataloader):
+        # Add batch to GPU
+        # batch = tuple(t.to(device) for t in batch)
+        # Unpack the inputs from our dataloader
+        b_input_ids, b_input_mask, b_labels = batch
+        # Clear out the gradients (by default they accumulate)
+        optimizer.zero_grad()
+        # Forward pass
+        loss = model(b_input_ids, token_type_ids=None, attention_mask=b_input_mask, labels=b_labels)
+        train_loss_set.append(loss.item())    
+        # Backward pass
+        loss.backward()
+        # Update parameters and take a step using the computed gradient
+        optimizer.step()
+
+
+        # Update tracking variables
+        tr_loss += loss.item()
+        nb_tr_examples += b_input_ids.size(0)
+        nb_tr_steps += 1
+    print("Train loss: {}".format(tr_loss/nb_tr_steps))
+    
+    # Validation
+
+    # Put model in evaluation mode to evaluate loss on the validation set
+    model.eval()
+
+    # Tracking variables 
+    eval_loss, eval_accuracy = 0, 0
+    nb_eval_steps, nb_eval_examples = 0, 0
+    
+    # Evaluate data for one epoch
+    for batch in validation_dataloader:
+        # Add batch to GPU
+        # batch = tuple(t.to(device) for t in batch)
+        # Unpack the inputs from our dataloader
+        b_input_ids, b_input_mask, b_labels = batch
+        # Telling the model not to compute or store gradients, saving memory and speeding up validation
+        with torch.no_grad():
+          # Forward pass, calculate logit predictions
+          logits = model(b_input_ids, token_type_ids=None, attention_mask=b_input_mask)
+
+        # Move logits and labels to CPU
+        logits = logits.detach().cpu().numpy()
+        label_ids = b_labels.to('cpu').numpy()
+
+        tmp_eval_accuracy = flat_accuracy(logits, label_ids)
+
+        eval_accuracy += tmp_eval_accuracy
+        nb_eval_steps += 1
+        
+    print("Validation Accuracy: {}".format(eval_accuracy/nb_eval_steps))
+```
+
+    Epoch:   0%|          | 0/2 [00:00<?, ?it/s]/opt/conda/lib/python3.10/site-packages/pytorch_pretrained_bert/optimization.py:275: UserWarning: This overload of add_ is deprecated:
+    	add_(Number alpha, Tensor other)
+    Consider using one of the following signatures instead:
+    	add_(Tensor other, *, Number alpha) (Triggered internally at ../torch/csrc/utils/python_arg_parser.cpp:1519.)
+      next_m.mul_(beta1).add_(1 - beta1, grad)
+
+
+    Train loss: 0.6940294128291461
+
+
+    Epoch:  50%|█████     | 1/2 [1:26:54<1:26:54, 5214.37s/it]
+
+    Validation Accuracy: 0.8435509884294838
+
+
+With 1 epco we got validation f1 score at 0.84 which is highest among all other methods
 
 
 ```python
